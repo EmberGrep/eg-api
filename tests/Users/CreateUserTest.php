@@ -1,5 +1,7 @@
 <?php
 
+use EmberGrep\Models\User;
+
 class CreateUserTest extends AcceptanceTestCase
 {
     /**
@@ -9,6 +11,14 @@ class CreateUserTest extends AcceptanceTestCase
      */
     public function testExample()
     {
-        $this->assertTrue(true);
+        $this->call('POST', '/register', ['username' => 'admin@example.com', 'password' => 'password']);
+
+        $this->assertResponseOk();
+
+        $token = $this->decodeResponseJson()['token'];
+        $user = User::first();
+        $tokenUser = JWTAuth::toUser($token);
+
+        $this->assertEquals($tokenUser->id, $user->id);
     }
 }

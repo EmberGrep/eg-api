@@ -1,6 +1,4 @@
-<?php
-
-namespace EmberGrep;
+<?php namespace EmberGrep\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -12,7 +10,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'email', 'password',
     ];
 
     /**
