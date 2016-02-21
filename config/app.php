@@ -149,6 +149,12 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * Third Party Providers...
+         */
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Irazasyed\JwtAuthGuard\JwtAuthGuardServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         EmberGrep\Providers\AppServiceProvider::class,
