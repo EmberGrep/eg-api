@@ -11,8 +11,9 @@ class CreateUserTest extends AcceptanceTestCase
      */
     public function testExample()
     {
-        $this->call('POST', '/register', ['username' => 'admin@example.com', 'password' => 'password']);
+        $this->call('POST', '/register', ['username' => 'admin@example.com', 'password' => 'password', 'password_confirmation' => 'password']);
 
+        Log::info($this->response->getContent());
         $this->assertResponseOk();
 
         $token = $this->decodeResponseJson()['token'];

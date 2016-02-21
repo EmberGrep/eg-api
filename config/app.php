@@ -131,6 +131,7 @@ return [
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
         Illuminate\Filesystem\FilesystemServiceProvider::class,
@@ -143,7 +144,9 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
 
         /*
          * Third Party Providers...
@@ -180,6 +183,7 @@ return [
         'Blade'     => Illuminate\Support\Facades\Blade::class,
         'Cache'     => Illuminate\Support\Facades\Cache::class,
         'Config'    => Illuminate\Support\Facades\Config::class,
+        'Cookie'    => Illuminate\Support\Facades\Cookie::class,
         'Crypt'     => Illuminate\Support\Facades\Crypt::class,
         'DB'        => Illuminate\Support\Facades\DB::class,
         'Eloquent'  => Illuminate\Database\Eloquent\Model::class,
@@ -187,6 +191,7 @@ return [
         'File'      => Illuminate\Support\Facades\File::class,
         'Gate'      => Illuminate\Support\Facades\Gate::class,
         'Hash'      => Illuminate\Support\Facades\Hash::class,
+        'Lang'      => Illuminate\Support\Facades\Lang::class,
         'Log'       => Illuminate\Support\Facades\Log::class,
         'Mail'      => Illuminate\Support\Facades\Mail::class,
         'Password'  => Illuminate\Support\Facades\Password::class,
@@ -201,6 +206,7 @@ return [
         'Storage'   => Illuminate\Support\Facades\Storage::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
+        'View'      => Illuminate\Support\Facades\View::class,
 
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
 
