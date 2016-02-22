@@ -12,3 +12,4 @@ $router->get('/', function() {
 });
 
 $router->post('/register', 'Auth\Register@store');
+$router->post('/auth-token', 'Auth\JWTToken@store');

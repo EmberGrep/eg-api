@@ -19,7 +19,7 @@ class CreateUserTest extends AcceptanceTestCase
 
     public function testCannotCreateExistingUser()
     {
-        $properties = ['email' => 'admin@example.com', 'password' => 'password'];
+        $properties = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
         User::create($properties);
 
         $this->call('POST', '/register', ['username' => 'admin@example.com', 'password' => 'password', 'password_confirmation' => 'password']);
