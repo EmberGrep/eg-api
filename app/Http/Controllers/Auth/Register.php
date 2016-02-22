@@ -8,6 +8,8 @@ use EmberGrep\Models\User;
 
 use Tymon\JWTAuth\JWTAuth;
 
+use Illuminate\Validation\ValidationException;
+
 class Register extends Controller
 {
     protected $rules = [
@@ -39,11 +41,11 @@ class Register extends Controller
 
     protected function validateAttributes(array $attrs, array $rules, array $messages = [], array $customAttributes = [])
     {
-        $validator = $this->getValidationFactory()->make($attrs, $rules, $messages, $customAttributes);
+        $validator = app('validator')->make($attrs, $rules, $messages, $customAttributes);
 
 
         if ($validator->fails()) {
-            $this->throwValidationException(app('request'), $validator);
+            $this->throwValidationException($validator);
         }
     }
 

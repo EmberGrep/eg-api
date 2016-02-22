@@ -1,7 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use EmberGrep\Models\User;
+
+$router->get('/', function() {
+    return new JsonResponse([
+        'version' => '0.0.1',
+        'links' => [
+            'self' => Request::root(),
+        ]
+    ]);
+});
 
 $router->post('/register', 'Auth\Register@store');
