@@ -13,3 +13,7 @@ $router->get('/', function() {
 
 $router->post('/register', 'Auth\Register@store');
 $router->post('/auth-token', 'Auth\JWTToken@store');
+
+$router->group(['prefix' => 'free-lessons'], function($router) {
+    $router->get('/', 'FreeLessons\ListLessons@action');
+});
