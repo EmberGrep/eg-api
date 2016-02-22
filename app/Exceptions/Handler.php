@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use Illuminate\Http\JsonResponse;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -19,7 +21,7 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         AuthorizationException::class,
         HttpException::class,
-        ModelNotFoundException::class,
+        // ModelNotFoundException::class,
         ValidationException::class,
     ];
 
@@ -45,6 +47,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof ModelNotFoundException) {
+            return new JsonResponse([
+                'errors' => [
+                    [
+                        'status' => '404',
+                        'title' => 'Not Found',
+                        'detail' => 'The requested resource was not found.'
+                    ],
+                ],
+            ], 404);
+        }
+
         return parent::render($request, $e);
     }
 }
