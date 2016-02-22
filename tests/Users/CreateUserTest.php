@@ -36,4 +36,21 @@ class CreateUserTest extends AcceptanceTestCase
             ],
         ]);
     }
+
+    public function testCannotCreateUnconfirmedPassword()
+    {
+        $this->call('POST', '/register', ['username' => 'admin@example.com', 'password' => 'password', 'password_confirmation' => 'passwordFoo']);
+
+        $this->assertResponseStatus(400);
+
+        $this->seeJson([
+            'errors' => [
+                [
+                  'status' => '400',
+                  'title' => 'Invalid Attribute',
+                  'detail' => 'The password confirmation does not match.',
+                ],
+            ],
+        ]);
+    }
 }
