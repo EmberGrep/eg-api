@@ -16,5 +16,10 @@ $router->post('/auth-token', 'Auth\JWTToken@store');
 
 $router->group(['prefix' => 'free-lessons'], function($router) {
     $router->get('/', 'FreeLessons\ListLessons@action');
-    $router->get('/{lessonId}', 'FreeLessons\FindLessons@action');
+    $router->get('/{lessonSlug}', 'FreeLessons\FindLessons@action');
+});
+
+$router->group(['prefix' => 'course-abstracts'], function($router) {
+    $router->get('/', 'CourseAbstracts\ListCourseAbstracts@action');
+    $router->get('/{courseSlug}', 'CourseAbstracts\FindCourseAbstract@action');
 });
