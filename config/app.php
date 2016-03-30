@@ -161,6 +161,7 @@ return [
         EmberGrep\Providers\AuthServiceProvider::class,
         EmberGrep\Providers\EventServiceProvider::class,
         EmberGrep\Providers\RouteServiceProvider::class,
+        EmberGrep\Providers\JsonSerializeMacroProvider::class,
 
     ],
 

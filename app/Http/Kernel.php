@@ -48,7 +48,6 @@ class Kernel extends HttpKernel
         'auth' => \EmberGrep\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \EmberGrep\Http\Middleware\RedirectIfAuthenticated::class,
-        'json-api' => \EmberGrep\Http\Middleware\JsonSerialize::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }
