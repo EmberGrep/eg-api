@@ -6,8 +6,8 @@ class FreeLessonsTest extends AcceptanceTestCase
 {
     public function testAllFreeLessons()
     {
-        Lesson::create(['title' => 'Foo', 'position' => 1, 'free' => true]);
-        Lesson::create(['title' => 'Bar', 'position' => 2, 'free' => false]);
+        Lesson::create(['title' => 'Foo', 'description' => 'Yo', 'position' => 1, 'free' => true]);
+        Lesson::create(['title' => 'Bar', 'description' => 'Yo', 'position' => 2, 'free' => false]);
         $this->call('GET', '/free-lessons');
 
         $this->assertResponseOk();
@@ -19,6 +19,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                     'id' => 'foo',
                     'attributes' => [
                         'title' => 'Foo',
+                        'description' => 'Yo',
                         'position' => '1',
                     ],
                 ],
@@ -28,7 +29,7 @@ class FreeLessonsTest extends AcceptanceTestCase
 
     public function testFindFreeLesson()
     {
-        Lesson::create(['title' => 'Foo', 'position' => 1, 'free' => true]);
+        Lesson::create(['title' => 'Foo', 'description' => 'Yo', 'position' => 1, 'free' => true]);
         $this->call('GET', '/free-lessons/foo');
 
         $this->assertResponseOk();
@@ -39,6 +40,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                 'id' => 'foo',
                 'attributes' => [
                     'title' => 'Foo',
+                    'description' => 'Yo',
                     'position' => '1',
                 ],
             ],
@@ -47,7 +49,7 @@ class FreeLessonsTest extends AcceptanceTestCase
 
     public function testErrorFindFreeLessonIsPaid()
     {
-        Lesson::create(['title' => 'Foo', 'position' => 1, 'free' => false]);
+        Lesson::create(['title' => 'Foo', 'description' => 'Yo', 'position' => 1, 'free' => false]);
         $this->call('GET', '/free-lessons/foo');
 
         $this->assertResponseStatus(401);

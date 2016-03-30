@@ -20,6 +20,7 @@ class CreateLessonsTable extends Migration {
 			$table->string('slug');
 			$table->integer('course_id')->nullable();
 			$table->integer('position');
+			$table->timestamp('released_at')->nullable();
 			$table->integer('video_id')->nullable();
 			$table->boolean('free')->default(false);
 			$table->timestamps();

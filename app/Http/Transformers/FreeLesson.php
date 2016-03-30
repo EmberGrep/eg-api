@@ -25,11 +25,9 @@ class FreeLesson extends TransformerAbstract
     public function transform(Lesson $lesson)
     {
         $attrs = [
-            'id'      => (int) $lesson->id,
-            'slug' => $lesson->slug,
+            'id'      => $lesson->slug,
             'title' => $lesson->title,
             'description' => $lesson->description,
-            'lessonNotes' => $lesson->lesson_notes,
             'position' => $lesson->position,
         ];
 
