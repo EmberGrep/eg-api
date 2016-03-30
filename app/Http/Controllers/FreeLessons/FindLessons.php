@@ -1,11 +1,8 @@
 <?php namespace EmberGrep\Http\Controllers\FreeLessons;
 
-use Illuminate\Http\Request;
 use EmberGrep\Http\Controllers\Controller;
 
 use EmberGrep\Models\Lesson;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Contracts\Routing\ResponseFactory as Response;
 
 use League\Fractal\Resource\Item;
 use EmberGrep\Http\Transformers\FreeLesson as FreeLessonTransformer;
@@ -17,12 +14,12 @@ class FindLessons extends Controller
         $this->lesson = $lesson;
     }
 
-    public function action($slug, Response $res)
+    public function action($slug)
     {
         $lesson = $this->lesson->where(['slug' => $slug])->firstOrFail();
 
         if (!$lesson->free) {
-            return new JsonResponse([
+            return response()->json([
                 'errors' => [
                     [
                         'status' => '401',
@@ -35,6 +32,6 @@ class FindLessons extends Controller
 
         $item = new Item($lesson, new FreeLessonTransformer(), 'free-lessons');
 
-        return $res->jsonApi($item);
+        return response()->jsonApi($item);
     }
 }

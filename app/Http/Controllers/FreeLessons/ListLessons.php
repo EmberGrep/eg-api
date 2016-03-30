@@ -5,7 +5,8 @@ use EmberGrep\Http\Controllers\Controller;
 
 use EmberGrep\Models\Lesson;
 
-use Illuminate\Http\JsonResponse;
+use League\Fractal\Resource\Collection;
+use EmberGrep\Http\Transformers\FreeLesson as FreeLessonTransformer;
 
 class ListLessons extends Controller
 {
@@ -18,17 +19,8 @@ class ListLessons extends Controller
     {
         $freeLessons = $this->lesson->where(['free' => true])->get();
 
-        return [
-            'data' => $freeLessons->map(function ($lesson) {
-                return [
-                    'type' => 'free-lessons',
-                    'id' => $lesson->slug,
-                    'attributes' => [
-                        'title' => $lesson->title,
-                        'position' => $lesson->position,
-                    ],
-                ];
-            }),
-        ];
+        $item = new Collection($freeLessons, new FreeLessonTransformer(), 'free-lessons');
+
+        return response()->jsonApi($item);
     }
 }
