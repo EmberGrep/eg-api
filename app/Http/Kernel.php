@@ -15,7 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         Middleware\Exceptions\ValidationHandler::class,
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        // \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
     ];
 
     /**
@@ -48,6 +48,7 @@ class Kernel extends HttpKernel
         'auth' => \EmberGrep\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \EmberGrep\Http\Middleware\RedirectIfAuthenticated::class,
+        'json-api' => \EmberGrep\Http\Middleware\JsonSerialize::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }

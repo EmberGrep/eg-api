@@ -4,14 +4,18 @@ use Illuminate\Http\Request;
 use EmberGrep\Http\Controllers\Controller;
 
 use EmberGrep\Models\Lesson;
-
 use Illuminate\Http\JsonResponse;
+
+use League\Fractal\Resource\Item;
+use EmberGrep\Http\Transformers\FreeLesson as FreeLessonTransformer;
 
 class FindLessons extends Controller
 {
     public function __construct(Lesson $lesson)
     {
         $this->lesson = $lesson;
+
+        $this->middleware('json-api');
     }
 
     public function action($slug)
@@ -30,15 +34,6 @@ class FindLessons extends Controller
             ], 401);
         }
 
-        return [
-            'data' => [
-                'type' => 'free-lessons',
-                'id' => $lesson->slug,
-                'attributes' => [
-                    'title' => $lesson->title,
-                    'position' => $lesson->position,
-                ],
-            ]
-        ];
+        return new Item($lesson, new FreeLessonTransformer(), 'lesson');
     }
 }
