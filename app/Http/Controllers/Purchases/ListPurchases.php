@@ -8,20 +8,22 @@ use EmberGrep\Models\Purchase;
 use League\Fractal\Resource\Collection;
 use EmberGrep\Http\Transformers\Purchase as PurchaseTransformer;
 
+use Auth;
+
 class ListPurchases extends Controller
 {
-    public function __construct(Purchase $course)
+    public function __construct(Purchase $purchase)
     {
-        $this->course = $course;
-       $this->middleware('auth');
+        $this->purchase = $purchase;
+        $this->middleware('auth');
     }
 
     public function action()
     {
-        // $freePurchases = $this->course->where(['is_published' => true])->get();
+        $purchases = Auth::user()->purchases()->get();
 
-        // $item = new Collection($freePurchases, new PurchaseTransformer(), 'course-abstracts');
+        $item = new Collection($purchases, new PurchaseTransformer(), 'purchases');
 
-        // return response()->jsonApi($item);
+        return response()->jsonApi($item);
     }
 }

@@ -12,4 +12,9 @@ class Purchase extends Model
         'charge_id',
         'notifications',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }

@@ -40,7 +40,6 @@ class PurchasesIndexTest extends AcceptanceTestCase
         $this->courseTwo = Course::create($this->courseAttrsTwo);
 
         $this->purchaseAttrs = [
-            'created_at' => Carbon::now()->subDay(),
             'course_id' => 1,
             'user_id' => $this->user->id,
         ];
@@ -57,26 +56,36 @@ class PurchasesIndexTest extends AcceptanceTestCase
         ]);
     }
 
-    // public function testAllPurchases()
-    // {
-    //     $this->setupData();
-    //     $this->call('GET', '/purchases', [], [], ['Authorization' => 'Bearer {$this->token}']);
-    //
-    //     $this->assertResponseOk();
-    //
-    //     $this->seeJson([
-    //         'data' => [
-    //             [
-    //                 'type' => 'purchases',
-    //                 'id' => '1',
-    //                 'attributes' => [
-    //                     'purchase-price' => 400,
-    //                     'course'        => 'first-name',
-    //                     'date'          => $this->purchaseAttrs['created_at']->toIso8601String(),
-    //                     'notifications' => true,
-    //                 ],
-    //             ],
-    //         ],
-    //     ]);
-    // }
+    public function testAllPurchases()
+    {
+        $this->setupData();
+
+        $p = Purchase::create([
+            'user_id' => $this->user->id,
+            'course_id' => $this->courseOne->id,
+            'charge_amount' => 400,
+            'card_brand' => 'VISA',
+            'charge_id' => 'BARTER',
+        ]);
+
+
+        $this->call('GET', '/purchases', [], [], [], $this->bearer($this->token));
+
+        $this->assertResponseOk();
+
+        $this->seeJson([
+            'data' => [
+                [
+                    'type' => 'purchases',
+                    'id' => '1',
+                    'attributes' => [
+                        'purchase-price' => 400,
+                        'course'        => 'first-name',
+                        'date'          => $p->created_at->toIso8601String(),
+                        'notifications' => true,
+                    ],
+                ],
+            ],
+        ]);
+    }
 }
