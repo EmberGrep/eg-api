@@ -11,7 +11,7 @@ class Purchase extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        // 'lessons',
+        'course',
     ];
 
     /**
@@ -33,8 +33,8 @@ class Purchase extends TransformerAbstract
         return $attrs;
     }
 
-    // protected function includeLessons(PurchaseModel $purchase)
-    // {
-    //     return $this->collection($purchase->lessons, new LessonAbstract(), 'lesson-abstracts');
-    // }
+    protected function includeCourse(PurchaseModel $purchase)
+    {
+        return $this->item($purchase->course, new Course(), 'course');
+    }
 }

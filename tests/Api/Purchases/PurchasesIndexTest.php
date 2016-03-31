@@ -50,10 +50,6 @@ class PurchasesIndexTest extends AcceptanceTestCase
         $this->call('GET', '/purchases', [], [], [], $this->bearer($this->invalidToken));
 
         $this->assertResponseStatus(401);
-
-        $this->seeJson([
-            'error' => 'user_not_found',
-        ]);
     }
 
     public function testAllPurchases()
@@ -84,6 +80,33 @@ class PurchasesIndexTest extends AcceptanceTestCase
                         'date'          => $p->created_at->toIso8601String(),
                         'notifications' => true,
                     ],
+                    'relationships' => [
+                        "course" => [
+                            "data" => [
+                                "id" => "first-name","type"=> "course"
+                            ]
+                        ]
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->seeJson([
+            'included' => [
+                [
+                        "attributes" => [
+                        "active" => true,
+                        "coming-soon" => false,
+                        "description" => "lorem pixum",
+                        "long-description" => "Lorem ipsum dolor sit amet",
+                        "name" => "First Name",
+                        "price" => 200,
+                        "purchased" => false,
+                        "release-date" => $this->courseOne->release_date->toIso8601String(),
+                        "time" => 0,
+                    ],
+                    "id" => "first-name",
+                    "type" => "course",
                 ],
             ],
         ]);
