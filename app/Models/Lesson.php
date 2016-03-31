@@ -26,7 +26,7 @@ class Lesson extends Model
 
     public function video()
     {
-        return $this->belongsTo('EmberGrep\\Models\\Video');
+        return $this->hasOne(Video::class);
     }
 
     public function tags()
@@ -88,5 +88,10 @@ class Lesson extends Model
     public function getFilesProperty()
     {
         return $this->files()->orderBy('position')->get();
+    }
+
+    public function getTimeAttribute()
+    {
+        return $this->video->time;
     }
 }
