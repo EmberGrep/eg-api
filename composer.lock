@@ -4,9 +4,48 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "433abd0b78925d866736c2c9ea693202",
-    "content-hash": "d809a1076bf2745805460979a9a6af94",
+    "hash": "678f56a95d1de58a625480d2f15921c3",
+    "content-hash": "e7c53cf771bccf65bbbcec813aefacb3",
     "packages": [
+        {
+            "name": "bobbysciacchitano/manuel",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bobbysciacchitano/manuel.git",
+                "reference": "a2c70ce1187fe227e16099e28a60b740aa897673"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bobbysciacchitano/manuel/zipball/a2c70ce1187fe227e16099e28a60b740aa897673",
+                "reference": "a2c70ce1187fe227e16099e28a60b740aa897673",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Manuel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A simple object serializer for PHP which supports flexible document structures.",
+            "homepage": "https://github.com/bobbysciacchitano/manuel",
+            "keywords": [
+                "encoder",
+                "formatted",
+                "json",
+                "jsonapi",
+                "serializer",
+                "transformer"
+            ],
+            "time": "2016-03-05 23:22:06"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.0.0",
@@ -3338,8 +3377,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "bobbysciacchitano/manuel": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
