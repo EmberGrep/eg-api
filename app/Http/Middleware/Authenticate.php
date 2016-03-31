@@ -1,29 +1,46 @@
-<?php
+<?php namespace EmberGrep\Http\Middleware;
 
-namespace EmberGrep\Http\Middleware;
+/*
+ * This file is part of jwt-auth.
+ *
+ * (c) Sean Tymon <tymon148@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-use Closure;
-use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Middleware\BaseMiddleware;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
-class Authenticate
+class Authenticate extends BaseMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, \Closure $next)
     {
-        if (Auth::guard($guard)->guest()) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('login');
-            }
+        if (! $token = $this->auth->setRequest($request)->getToken()) {
+            return $this->respond('tymon.jwt.absent', 'token_not_provided', 400);
         }
+
+        try {
+            $user = $this->auth->authenticate($token);
+        } catch (TokenExpiredException $e) {
+            return $this->respond('tymon.jwt.expired', 'token_expired', 401, [$e]);
+        } catch (JWTException $e) {
+            return $this->respond('tymon.jwt.invalid', 'token_invalid', $e->getStatusCode(), [$e]);
+        }
+
+        if (! $user) {
+            return $this->respond('tymon.jwt.user_not_found', 'user_not_found', 401);
+        }
+
+        $this->events->fire('tymon.jwt.valid', $user);
 
         return $next($request);
     }

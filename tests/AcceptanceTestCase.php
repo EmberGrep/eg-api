@@ -12,4 +12,9 @@ abstract class AcceptanceTestCase extends TestCase
     {
         return JWTAuth::fromUser($user);
     }
+
+    protected function bearer($token)
+    {
+        return $this->transformHeadersToServerVars(['Authorization' => "Bearer {$token}"]);
+    }
 }

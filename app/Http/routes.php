@@ -23,3 +23,8 @@ $router->group(['prefix' => 'course-abstracts'], function($router) {
     $router->get('/', 'CourseAbstracts\ListCourseAbstracts@action');
     $router->get('/{courseSlug}', 'CourseAbstracts\FindCourseAbstract@action');
 });
+
+$router->group(['prefix' => 'purchases'], function($router) {
+    $router->get('/', 'Purchases\ListPurchases@action');
+    // $router->get('/{purchaseId}', 'Purchases\FindPurchase@action');
+});
