@@ -38,8 +38,15 @@ class Course extends Model
         return $this->is_published && $currentTime->gte($this->released_at);
     }
 
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
     public function getTimeAttribute()
     {
-        return 0;
+        return $this->lessons->reduce(function($carry, $lesson) {
+            return $carry + $lesson->time;
+        }, 0);
     }
 }
