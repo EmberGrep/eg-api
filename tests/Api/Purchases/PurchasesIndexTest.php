@@ -76,14 +76,13 @@ class PurchasesIndexTest extends AcceptanceTestCase
                     'id' => '1',
                     'attributes' => [
                         'purchase-price' => 400,
-                        'course'        => 'first-name',
                         'date'          => $p->created_at->toIso8601String(),
                         'notifications' => true,
                     ],
                     'relationships' => [
                         "course" => [
                             "data" => [
-                                "id" => "first-name","type"=> "course"
+                                "id" => "first-name","type"=> "courses"
                             ]
                         ]
                     ],
@@ -106,7 +105,7 @@ class PurchasesIndexTest extends AcceptanceTestCase
                         "time" => 0,
                     ],
                     "id" => "first-name",
-                    "type" => "course",
+                    "type" => "courses",
                 ],
             ],
         ]);

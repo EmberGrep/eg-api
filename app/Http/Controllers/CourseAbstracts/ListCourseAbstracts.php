@@ -5,7 +5,7 @@ use EmberGrep\Http\Controllers\Controller;
 
 use EmberGrep\Models\Course;
 
-use League\Fractal\Resource\Collection;
+use Manuel\Resource\Collection;
 use EmberGrep\Http\Transformers\CourseAbstract as CourseAbstractTransformer;
 
 class ListCourseAbstracts extends Controller

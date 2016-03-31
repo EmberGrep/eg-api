@@ -4,7 +4,7 @@ use EmberGrep\Http\Controllers\Controller;
 
 use EmberGrep\Models\Course;
 
-use League\Fractal\Resource\Item;
+use Manuel\Resource\Item;
 use EmberGrep\Http\Transformers\CourseAbstract as CourseAbstractTransformer;
 
 class FindCourseAbstract extends Controller

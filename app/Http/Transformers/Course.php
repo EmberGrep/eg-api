@@ -1,10 +1,12 @@
 <?php namespace EmberGrep\Http\Transformers;
 
-use League\Fractal\TransformerAbstract;
+use Manuel\Transformer\TransformerAbstract;
 use EmberGrep\Models\Course as CourseModel;
 
 class Course extends TransformerAbstract
 {
+    protected $type = 'courses';
+
     /**
      * List of resources to automatically include
      *

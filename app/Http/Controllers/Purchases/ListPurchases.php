@@ -5,7 +5,7 @@ use EmberGrep\Http\Controllers\Controller;
 
 use EmberGrep\Models\Purchase;
 
-use League\Fractal\Resource\Collection;
+use Manuel\Resource\Collection;
 use EmberGrep\Http\Transformers\Purchase as PurchaseTransformer;
 
 use Auth;

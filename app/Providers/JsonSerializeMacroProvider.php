@@ -5,8 +5,8 @@ namespace EmberGrep\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\JsonResponse;
 
-use League\Fractal\Manager;
-use League\Fractal\Serializer\JsonApiSerializer;
+use Manuel\Manager;
+use Manuel\Serializer\JsonApiSerializer;
 
 class JsonSerializeMacroProvider extends ServiceProvider
 {
@@ -18,12 +18,11 @@ class JsonSerializeMacroProvider extends ServiceProvider
     public function boot()
     {
         $app = $this->app;
-        $fractal = new Manager();
-        $fractal->setSerializer(new JsonApiSerializer());
+        $fractal = new Manager(new JsonApiSerializer());
         $response = $this->app->make('Illuminate\Contracts\Routing\ResponseFactory');
 
         $response->macro('jsonApi', function ($data) use ($fractal) {
-            return new JsonResponse($fractal->createData($data)->toArray());
+            return new JsonResponse($fractal->translate($data));
         });
     }
 

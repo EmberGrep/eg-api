@@ -1,18 +1,20 @@
 <?php namespace EmberGrep\Http\Transformers;
 
-use League\Fractal\TransformerAbstract;
+use Manuel\Transformer\TransformerAbstract;
 use EmberGrep\Models\Purchase as PurchaseModel;
+
+use Manuel\Resource\Item;
 
 class Purchase extends TransformerAbstract
 {
+    protected $type = 'purchases';
+
     /**
      * List of resources to automatically include
      *
      * @var array
      */
-    protected $defaultIncludes = [
-        'course',
-    ];
+    protected $includedResources = ['course'];
 
     /**
      * Transform only desired properties for API
@@ -23,9 +25,8 @@ class Purchase extends TransformerAbstract
     public function transform(PurchaseModel $purchase)
     {
         $attrs = [
-            'id'            => (int)$purchase->id,
+            'id'            => (string)$purchase->id,
             'purchase-price' => (int)$purchase->charge_amount,
-            'course'        => $purchase->course->slug,
             'date'          => $purchase->created_at->toIso8601String(),
             'notifications' => (boolean)$purchase->notifications,
         ];
@@ -33,8 +34,8 @@ class Purchase extends TransformerAbstract
         return $attrs;
     }
 
-    protected function includeCourse(PurchaseModel $purchase)
+    public function includeCourse(PurchaseModel $purchase)
     {
-        return $this->item($purchase->course, new Course(), 'course');
+        return new Item($purchase->course, new Course());
     }
 }

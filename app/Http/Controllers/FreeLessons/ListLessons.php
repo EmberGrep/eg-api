@@ -5,7 +5,7 @@ use EmberGrep\Http\Controllers\Controller;
 
 use EmberGrep\Models\Lesson;
 
-use League\Fractal\Resource\Collection;
+use Manuel\Resource\Collection;
 use EmberGrep\Http\Transformers\FreeLesson as FreeLessonTransformer;
 
 class ListLessons extends Controller
