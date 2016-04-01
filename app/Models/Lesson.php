@@ -92,6 +92,6 @@ class Lesson extends Model
 
     public function getTimeAttribute()
     {
-        return $this->video->time;
+        return $this->video ? $this->video->time : 0;
     }
 }

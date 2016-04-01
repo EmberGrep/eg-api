@@ -1,7 +1,7 @@
 <?php namespace EmberGrep\Http\Transformers;
 
 use Manuel\Transformer\TransformerAbstract;
-use EmberGrep\Models\Course;
+use EmberGrep\Models\Course as CourseModel;
 
 class CourseAbstract extends TransformerAbstract
 {
@@ -12,9 +12,7 @@ class CourseAbstract extends TransformerAbstract
      *
      * @var array
      */
-    protected $defaultIncludes = [
-        // 'lessons',
-    ];
+    protected $relationships = ['lessons'];
 
     /**
      * Transform only desired properties for API
@@ -22,7 +20,7 @@ class CourseAbstract extends TransformerAbstract
      * @param CourseModel $course
      * @return array
      */
-    public function transform(Course $course)
+    public function transform(CourseModel $course)
     {
         $attrs = [
             'id' => $course->slug,
@@ -40,8 +38,8 @@ class CourseAbstract extends TransformerAbstract
         return $attrs;
     }
 
-    // protected function includeLessons(CourseModel $course)
-    // {
-    //     return $this->collection($course->lessons, new LessonAbstract(), 'lesson-abstracts');
-    // }
+    public function relationshipLessons(CourseModel $course)
+    {
+        return $course->lessons()->lists('id')->toArray();
+    }
 }

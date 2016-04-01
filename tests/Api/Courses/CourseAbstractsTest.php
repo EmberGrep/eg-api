@@ -1,6 +1,7 @@
 <?php
 
 use EmberGrep\Models\Course;
+use EmberGrep\Models\Lesson;
 use Carbon\Carbon;
 
 class CourseAbstractssTest extends AcceptanceTestCase
@@ -42,6 +43,32 @@ class CourseAbstractssTest extends AcceptanceTestCase
                         'purchased' => false,
                         'coming-soon' => $this->attrs['coming_soon'],
                     ],
+                    'relationships' => [
+                        'lessons' => [
+                            'data' => [],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    public function testHasLessons()
+    {
+        $lesson = new Lesson(['title' => 'Foo', 'description' => 'Yo', 'position' => 1, 'free' => false]);
+        $course = Course::create($this->attrs);
+        $course->lessons()->save($lesson);
+
+        $this->call('GET', '/course-abstracts');
+
+        $this->assertResponseOk();
+
+        $this->seeJson([
+            'relationships' => [
+                'lessons' => [
+                    'data' => [
+                        ['type' => 'lessons', 'id' => (string) $lesson->id],
+                    ],
                 ],
             ],
         ]);
@@ -69,6 +96,11 @@ class CourseAbstractssTest extends AcceptanceTestCase
                     'long-description' => $this->attrs['description_long'],
                     'purchased' => false,
                     'coming-soon' => $this->attrs['coming_soon'],
+                ],
+                'relationships' => [
+                    'lessons' => [
+                        'data' => [],
+                    ],
                 ],
             ],
         ]);
