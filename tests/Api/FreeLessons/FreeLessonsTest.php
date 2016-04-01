@@ -1,13 +1,17 @@
 <?php
 
 use EmberGrep\Models\Lesson;
+use EmberGrep\Models\Video;
 
 class FreeLessonsTest extends AcceptanceTestCase
 {
     public function testAllFreeLessons()
     {
-        Lesson::create(['title' => 'Foo', 'description' => 'Yo', 'position' => 1, 'free' => true]);
+        $freeLesson = Lesson::create(['title' => 'Foo', 'description' => 'Yo', 'position' => 1, 'free' => true]);
         Lesson::create(['title' => 'Bar', 'description' => 'Yo', 'position' => 2, 'free' => false]);
+        $video = new Video(['time' => 20, 'mp4_sd_url' => 'lorem', 'mp4_hd_url' => 'lorem', 'mp4_source_url' => 'lorem']);
+        $freeLesson->video()->save($video);
+
         $this->call('GET', '/free-lessons');
 
         $this->assertResponseOk();
@@ -20,6 +24,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                     'attributes' => [
                         'title' => 'Foo',
                         'description' => 'Yo',
+                        'time' => 20,
                         'position' => '1',
                     ],
                 ],
@@ -42,6 +47,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                     'title' => 'Foo',
                     'description' => 'Yo',
                     'position' => '1',
+                    'time' => 0,
                 ],
             ],
         ]);
