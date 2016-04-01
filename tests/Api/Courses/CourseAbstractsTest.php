@@ -67,7 +67,7 @@ class CourseAbstractssTest extends AcceptanceTestCase
             'relationships' => [
                 'lessons' => [
                     'data' => [
-                        ['type' => 'lessons', 'id' => (string) $lesson->id],
+                        ['type' => 'lesson-abstracts', 'id' => (string) $lesson->id],
                     ],
                 ],
             ],

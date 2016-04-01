@@ -12,7 +12,7 @@ class CourseAbstract extends TransformerAbstract
      *
      * @var array
      */
-    protected $relationships = ['lessons'];
+    protected $relationships = ['lessons' => 'lesson-abstracts'];
 
     /**
      * Transform only desired properties for API
