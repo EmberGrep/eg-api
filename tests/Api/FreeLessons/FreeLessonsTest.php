@@ -29,7 +29,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                     'relationships' => [
                         'video' => [
                             'data' => [
-                                'type' => 'videos',
+                                'type' => 'free-videos',
                                 'id' => (string)$video->id,
                             ],
                         ],

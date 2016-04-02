@@ -10,4 +10,9 @@ class Video extends Model
         'mp4_hd_url',
         'mp4_source_url',
     ];
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class);
+    }
 }

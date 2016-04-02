@@ -42,7 +42,7 @@ class FreeLesson extends TransformerAbstract
     public function includeVideo(Lesson $lesson)
     {
         if ($lesson->video) {
-            return new Item($lesson->video, new Video());
+            return new Item($lesson->video, new FreeVideo());
         }
 
         return null;
