@@ -20,8 +20,8 @@ class FreeVideo extends TransformerAbstract
         return [
             'id'      => (string)$video->id,
             'time' => (int) $video->time,
-            'mp4_sd_url' => $video->mp4_sd_url,
-            'mp4_hd_url' => $video->mp4_hd_url,
+            'sd-url' => $video->mp4_sd_url,
+            'hd-url' => $video->mp4_hd_url,
         ];
     }
 
