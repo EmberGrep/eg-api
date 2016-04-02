@@ -25,7 +25,14 @@ class FreeLessonsTest extends AcceptanceTestCase
                         'title' => 'Foo',
                         'description' => 'Yo',
                         'time' => 20,
-                        'position' => '1',
+                    ],
+                    'relationships' => [
+                        'video' => [
+                            'data' => [
+                                'type' => 'videos',
+                                'id' => (string)$video->id,
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -46,9 +53,9 @@ class FreeLessonsTest extends AcceptanceTestCase
                 'attributes' => [
                     'title' => 'Foo',
                     'description' => 'Yo',
-                    'position' => '1',
                     'time' => 0,
                 ],
+                'relationships' => [],
             ],
         ]);
     }

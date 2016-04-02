@@ -3,6 +3,8 @@
 use EmberGrep\Models\Lesson;
 use Manuel\Transformer\TransformerAbstract;
 
+use Manuel\Resource\Item;
+
 class FreeLesson extends TransformerAbstract
 {
     protected $type = 'free-lessons';
@@ -12,7 +14,8 @@ class FreeLesson extends TransformerAbstract
      *
      * @var array
      */
-    protected $defaultIncludes = [
+    protected $includedResources = [
+        'video',
         // 'links',
         // 'tags',
         // 'files',
@@ -31,24 +34,17 @@ class FreeLesson extends TransformerAbstract
             'title' => $lesson->title,
             'time' => (int) $lesson->time,
             'description' => $lesson->description,
-            'position' => $lesson->position,
         ];
 
         return $attrs;
     }
 
-    protected function includeTags(Lesson $lesson)
+    public function includeVideo(Lesson $lesson)
     {
-        return $this->collection($lesson->tags, new Tag(), 'lesson_tags');
-    }
+        if ($lesson->video) {
+            return new Item($lesson->video, new Video());
+        }
 
-    protected function includeFiles(Lesson $lesson)
-    {
-        return $this->collection($lesson->files, new File(), 'lesson_files');
-    }
-
-    protected function includeLinks(Lesson $lesson)
-    {
-        return $this->collection($lesson->links()->orderBy('position')->get(), new Link(), 'lesson_links');
+        return null;
     }
 }
