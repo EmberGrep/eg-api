@@ -40,6 +40,6 @@ class CourseAbstract extends TransformerAbstract
 
     public function relationshipLessons(CourseModel $course)
     {
-        return $course->lessons()->lists('id')->toArray();
+        return $course->lessons()->lists('slug')->toArray();
     }
 }

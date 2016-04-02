@@ -24,10 +24,11 @@ class Register extends Controller
 
     public function store(Request $req)
     {
+        $userData = json_decode($req->get('user_data'));
         $credentials = [
             'email' => $req->get('username'),
             'password' => $req->get('password'),
-            'password_confirmation' => $req->get('password_confirmation'),
+            'password_confirmation' => isset $userData['password_confirmation'] ? $userData['password_confirmation'] : '',
         ];
 
         $this->validateAttributes($credentials, $this->rules);
