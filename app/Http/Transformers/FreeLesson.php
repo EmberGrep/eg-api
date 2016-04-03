@@ -34,6 +34,7 @@ class FreeLesson extends TransformerAbstract
             'title' => $lesson->title,
             'time' => (int) $lesson->time,
             'description' => $lesson->description,
+            'lesson-notes' => $lesson->lesson_notes,
         ];
 
         return $attrs;
