@@ -33,6 +33,8 @@ class Register extends Controller
 
         $this->validateAttributes($credentials, $this->rules);
 
+        $credentials['password'] = bcrypt($credentials['password']);
+
         $user = User::create($credentials);
 
         $token = $this->auth->fromUser($user);

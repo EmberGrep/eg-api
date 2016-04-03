@@ -32,7 +32,7 @@ class CourseAbstract extends TransformerAbstract
             'description' => $course->description,
             'long-description' => $course->description_long,
             'coming-soon' => (boolean) $course->coming_soon,
-            'purchased' => (boolean) $course->purchased,
+            'purchased' => (boolean) $course->hasPurchased(),
         ];
 
         return $attrs;
