@@ -25,6 +25,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                         'title' => 'Foo',
                         'description' => 'Yo',
                         'time' => 20,
+                        'lesson-notes' => '',
                     ],
                     'relationships' => [
                         'video' => [
@@ -54,6 +55,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                     'title' => 'Foo',
                     'description' => 'Yo',
                     'time' => 0,
+                    'lesson-notes' => '',
                 ],
                 'relationships' => [],
             ],
