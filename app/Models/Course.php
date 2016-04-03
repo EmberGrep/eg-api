@@ -43,10 +43,30 @@ class Course extends Model
         return $this->hasMany(Lesson::class);
     }
 
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
+    public function users()
+    {
+        return $this->hasManyThrough(User::class, Purchase::class);
+    }
+
     public function getTimeAttribute()
     {
         return $this->lessons->reduce(function($carry, $lesson) {
             return $carry + $lesson->time;
         }, 0);
+    }
+
+    public function hasPurchased()
+    {
+        $user = \Auth::user();
+
+        if ($user) {
+            return $this->purchases()->join('users', 'users.id', '=', 'purchases.user_id')
+                ->where('users.id', $user->id)->count() === 1;
+        }
     }
 }

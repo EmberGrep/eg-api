@@ -4,9 +4,11 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use EmberGrep\Models\Course;
+use EmberGrep\Models\User;
 use EmberGrep\Models\Lesson;
 use EmberGrep\Models\Video;
-use EmberGrep\Models\Course;
+use EmberGrep\Models\Purchase;
 use Carbon\Carbon;
 
 class CourseTest extends TestCase
@@ -42,5 +44,24 @@ class CourseTest extends TestCase
         $lessonTwo->video()->save($videoTwo);
 
         $this->assertEquals($course->time, 80);
+    }
+
+    public function testCourseIsPurchased()
+    {
+        $course = Course::create($this->attrs);
+        $userProperties = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
+        $user = User::create($userProperties);
+
+        $purchase = Purchase::create([
+            'user_id' => $user->id,
+            'course_id' => $course->id,
+            'charge_amount' => 400,
+            'card_brand' => 'VISA',
+            'charge_id' => 'BARTER',
+        ]);
+
+        Auth::login($user);
+
+        $this->assertEquals($course->hasPurchased(), $user->id);
     }
 }
