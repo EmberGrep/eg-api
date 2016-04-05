@@ -18,7 +18,8 @@
         "tymon/jwt-auth": "^0.5.9",
         "league/fractal": "^0.13.0",
         "bobbysciacchitano/manuel": "dev-master",
-        "barryvdh/laravel-cors": "^0.8.0"
+        "barryvdh/laravel-cors": "^0.8.0",
+        "fedeisas/laravel-mail-css-inliner": "^1.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

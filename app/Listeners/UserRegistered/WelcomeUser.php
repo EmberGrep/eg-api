@@ -28,7 +28,7 @@ class WelcomeUser
      */
     public function handle(UserRegistered $event)
     {
-        $this->mailer->send('emails.welcome', [], function($m) use ($event) {
+        $this->mailer->send('emails.welcome', ['title' => 'Welcome to EmberGrep!'], function($m) use ($event) {
             $m->to($event->user->email)->subject('Welcome to EmberGrep.com');
         });
     }
