@@ -4,7 +4,7 @@ use EmberGrep\Models\User;
 
 class TokenAuthTest extends AcceptanceTestCase
 {
-    public function testCreateNewUser()
+    public function testJWTAuth()
     {
         $properties = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
         User::create($properties);
