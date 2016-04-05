@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'EmberGrep\Events\SomeEvent' => [
-            'EmberGrep\Listeners\EventListener',
+        'EmberGrep\Events\UserRegistered' => [
+            'EmberGrep\Listeners\UserRegistered\WelcomeUser',
         ],
     ];
 

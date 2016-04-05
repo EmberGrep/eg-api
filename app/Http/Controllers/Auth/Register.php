@@ -5,6 +5,7 @@ use Illuminate\Http\JsonResponse;
 
 use EmberGrep\Http\Controllers\Controller;
 use EmberGrep\Models\User;
+use EmberGrep\Events\UserRegistered;
 
 use Tymon\JWTAuth\JWTAuth;
 
@@ -36,6 +37,8 @@ class Register extends Controller
         $credentials['password'] = bcrypt($credentials['password']);
 
         $user = User::create($credentials);
+
+        event(new UserRegistered($user));
 
         $token = $this->auth->fromUser($user);
 
