@@ -154,6 +154,7 @@ return [
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Irazasyed\JwtAuthGuard\JwtAuthGuardServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Fedeisas\LaravelMailCssInliner\LaravelMailCssInlinerServiceProvider::class,
 
         /*
