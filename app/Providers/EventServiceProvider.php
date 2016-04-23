@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'EmberGrep\Events\UserRegistered' => [
             'EmberGrep\Listeners\UserRegistered\WelcomeUser',
         ],
+        \EmberGrep\Events\UserRequestPasswordReset::class => [
+            'EmberGrep\Listeners\UserPassword\SendEmail',
+        ],
     ];
 
     /**

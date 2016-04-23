@@ -33,8 +33,8 @@ class RequestResetPassword extends Controller
         $token = $this->token->create($user);
 
         event(new UserRequestPasswordReset($user->email, $token));
-
-        return request()->json([
+        
+        return response()->json([
             'status' => 201,
             'message' => 'Password reset email sent',
         ], 201);
