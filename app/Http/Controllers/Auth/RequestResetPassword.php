@@ -30,14 +30,26 @@ class RequestResetPassword extends Controller
         $email = $req->get('email');
 
         $user = $this->user->where('email', $email)->first();
+
+        if (!$user) {
+            return $this->userNotFoundError();
+        }
+
         $token = $this->token->create($user);
 
         event(new UserRequestPasswordReset($user->email, $token));
-        
+
         return response()->json([
             'status' => 201,
             'message' => 'Password reset email sent',
         ], 201);
     }
 
+    protected function userNotFoundError()
+    {
+        return response()->json([
+            'status' => 400,
+            'message'=> 'No user with that email exists.',
+        ], 400);
+    }
 }
