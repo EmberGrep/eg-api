@@ -23,7 +23,7 @@ class RequestPasswordResetTest extends AcceptanceTestCase
 
         $resetEvent = $this->getFiredEventInstance(EmberGrep\Events\UserRequestPasswordReset::class);
 
-        $this->assertResponseOk();
+        $this->assertResponseStatus(201);
 
         $this->assertEquals($resetEvent->email, $this->user->email, 'The email should be sent to the correct user');
         $this->assertTrue(Password::getRepository()->exists($this->user, $resetEvent->token));
