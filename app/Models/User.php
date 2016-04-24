@@ -23,6 +23,8 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+        'stripe_id', 'trial_ends_at',
+        'created_at', 'updated_at',
     ];
 
     public function purchases()

@@ -26,11 +26,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            // \EmberGrep\Http\Middleware\EncryptCookies::class,
+            // Middleware\EncryptCookies::class,
             // \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             // \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            // \EmberGrep\Http\Middleware\VerifyCsrfToken::class,
+            // Middleware\VerifyCsrfToken::class,
         ],
 
         'api' => [
@@ -46,9 +46,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \EmberGrep\Http\Middleware\Authenticate::class,
+        'optional-auth' => Middleware\OptionalAuthenticate::class,
+        'auth' => Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \EmberGrep\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
