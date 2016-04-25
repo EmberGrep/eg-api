@@ -33,5 +33,8 @@ $router->group(['prefix' => 'lesson-abstracts'], function($router) {
 
 $router->group(['prefix' => 'purchases'], function($router) {
     $router->get('/', 'Purchases\ListPurchases@action');
-    // $router->get('/{purchaseId}', 'Purchases\FindPurchase@action');
+});
+
+$router->group(['prefix' => 'purchase-attempts'], function($router) {
+    $router->post('/', 'Purchases\AttemptPurchase@action');
 });
