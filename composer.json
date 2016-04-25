@@ -20,7 +20,9 @@
         "bobbysciacchitano/manuel": "dev-master",
         "barryvdh/laravel-cors": "^0.8.0",
         "fedeisas/laravel-mail-css-inliner": "^1.4",
-        "barryvdh/laravel-ide-helper": "^2.1"
+        "barryvdh/laravel-ide-helper": "^2.1",
+        "laravel/cashier": "^6.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

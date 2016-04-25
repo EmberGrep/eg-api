@@ -1,6 +1,5 @@
 <?php namespace EmberGrep\Http\Controllers\Purchases;
 
-use Illuminate\Http\Request;
 use EmberGrep\Http\Controllers\Controller;
 
 use EmberGrep\Models\Purchase;
