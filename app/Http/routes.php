@@ -13,6 +13,7 @@ $router->get('/', function() {
 
 $router->post('/register', 'Auth\Register@store');
 $router->post('/auth-token', 'Auth\JWTToken@store');
+$router->post('/refresh-token', 'Auth\JWTRefresh@store');
 $router->post('/password-reset', 'Auth\RequestResetPassword@store');
 $router->post('/password-reset/{token}', 'Auth\ResetPassword@store');
 
