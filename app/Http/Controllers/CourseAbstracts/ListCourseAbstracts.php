@@ -12,6 +12,7 @@ class ListCourseAbstracts extends Controller
 {
     public function __construct(Course $course)
     {
+        $this->middleware('optional-auth');
         $this->course = $course;
     }
 

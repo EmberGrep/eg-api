@@ -27,7 +27,7 @@ class JWTToken extends Controller
         if($this->guard->attempt($credentials)) {
             $user = $this->guard->user();
 
-            $token = $this->auth->fromUser($user);
+            $token = $this->auth->fromUser($user, $user->toArray());
 
             return new JsonResponse(['token' => $token]);
         }
