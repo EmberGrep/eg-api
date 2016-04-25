@@ -15,7 +15,14 @@ class JWTRefresh extends Controller
     public function store(Request $req)
     {
         $token = $req->json('token');
-        return response()->json(['token' => $this->auth->refresh($token)]);
+        $newToken = $this->auth->refresh($token);
+
+        $user = $this->auth->toUser($newToken);
+
+        $token = $this->auth->fromUser($user, $user->toArray());
+        \Log::info($user);
+
+        return response()->json(compact('token'));
     }
 
 }
