@@ -9,6 +9,7 @@ use EmberGrep\Models\Purchase;
 use Auth;
 use Illuminate\Http\Request;
 use Manuel\Resource\Item;
+use Exception;
 
 class AttemptPurchase extends Controller
 {
@@ -32,11 +33,24 @@ class AttemptPurchase extends Controller
     {
         $user = $this->getUser();
         $courseSlug = $request->json('data.relationships.course.data.id');
+        $existing = $request->json('data.attributes.existing');
         $token = $request->json('data.attributes.token');
         $course = $this->course->where('slug', $courseSlug)->first();
 
-        $user->createAsStripeCustomer($token);
-        $charge = $user->charge($course->price);
+        try {
+            if (!$existing) {
+                $user->createAsStripeCustomer($token);
+            }
+            $charge = $user->charge($course->price);
+        } catch(Exception $e) {
+            return response()->json([
+                'errors' => [[
+                  'status' => '400',
+                  'title' =>  'Card Failure',
+                  'detail' => 'There was an error processing your card.',
+                ]],
+            ], 400);
+        }
 
         $purchase = $this->purchase->create([
             'user_id' => $user->id,
