@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\JsonResponse;
 
 use Manuel\Manager;
-use Manuel\Serializer\JsonApiSerializer;
+use Manuel\Serializer\JsonAPISerializer;
 
 class JsonSerializeMacroProvider extends ServiceProvider
 {
@@ -18,7 +18,7 @@ class JsonSerializeMacroProvider extends ServiceProvider
     public function boot()
     {
         $app = $this->app;
-        $fractal = new Manager(new JsonApiSerializer());
+        $fractal = new Manager(new JsonAPISerializer());
         $response = $this->app->make('Illuminate\Contracts\Routing\ResponseFactory');
 
         $response->macro('jsonApi', function ($data, $statusCode = 200) use ($fractal) {
