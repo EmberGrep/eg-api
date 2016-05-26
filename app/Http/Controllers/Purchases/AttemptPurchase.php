@@ -37,6 +37,16 @@ class AttemptPurchase extends Controller
         $token = $request->json('data.attributes.token');
         $course = $this->course->where('slug', $courseSlug)->first();
 
+        if ($course->hasPurchased()) {
+            return response()->json([
+               'errors' => [[
+                   'status' => '409',
+                   'title' =>  'Purchase Conflict',
+                   'detail' => 'You have already purchased this course.',
+               ]],
+            ], 409);
+        }
+
         try {
             if (!$existing) {
                 $user->createAsStripeCustomer($token);

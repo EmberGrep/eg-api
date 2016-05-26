@@ -103,6 +103,27 @@ class PurchaseAttemptTest extends AcceptanceTestCase
         $this->assertEquals($purchaseCount, 0, 'There should be no purchases in the system');
     }
 
+    public function testRepeatPurchaseAttemptFails()
+    {
+        $this->setupData($this->validCard);
+
+        $p = Purchase::create([
+            'user_id' => $this->user->id,
+            'course_id' => $this->courseOne->id,
+            'charge_amount' => 400,
+            'card_brand' => 'VISA',
+            'charge_id' => 'BARTER',
+        ]);
+
+        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+
+        $this->assertResponseStatus(409);
+
+        $purchaseCount = Purchase::count();
+
+        $this->assertEquals($purchaseCount, 1, 'There should still only be one purchase in the system');
+    }
+
     protected function getTestToken($cardNumber)
     {
         return Stripe\Token::create([
