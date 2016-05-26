@@ -83,7 +83,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
 
         $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
 
-        $this->assertResponseOk();
+        $this->assertResponseStatus(201);
 
         $purchaseCount = Purchase::count();
 
@@ -122,6 +122,27 @@ class PurchaseAttemptTest extends AcceptanceTestCase
         $purchaseCount = Purchase::count();
 
         $this->assertEquals($purchaseCount, 1, 'There should still only be one purchase in the system');
+    }
+
+    public function testUserCanPurchaseSecondCourse()
+    {
+        $this->setupData($this->validCard);
+
+        $p = Purchase::create([
+            'user_id' => $this->user->id,
+            'course_id' => $this->courseTwo->id,
+            'charge_amount' => 400,
+            'card_brand' => 'VISA',
+            'charge_id' => 'BARTER',
+        ]);
+
+        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+
+        $this->assertResponseStatus(201);
+
+        $purchaseCount = Purchase::count();
+
+        $this->assertEquals($purchaseCount, 2, 'There should be purchases for each course');
     }
 
     protected function getTestToken($cardNumber)

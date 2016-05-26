@@ -72,7 +72,7 @@ class AttemptPurchase extends Controller
 
         $item = new Item($purchase, new PurchaseTransformer(), 'purchase-attempts');
 
-        return response()->jsonApi($item);
+        return response()->jsonApi($item, 201);
     }
 
     /**
