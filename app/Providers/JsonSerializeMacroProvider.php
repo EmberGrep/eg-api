@@ -21,8 +21,8 @@ class JsonSerializeMacroProvider extends ServiceProvider
         $fractal = new Manager(new JsonAPISerializer());
         $response = $this->app->make('Illuminate\Contracts\Routing\ResponseFactory');
 
-        $response->macro('jsonApi', function ($data) use ($fractal) {
-            return new JsonResponse($fractal->translate($data));
+        $response->macro('jsonApi', function ($data, $statusCode = 200) use ($fractal) {
+            return new JsonResponse($fractal->translate($data), $statusCode);
         });
     }
 
