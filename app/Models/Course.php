@@ -62,12 +62,12 @@ class Course extends Model
 
     public function hasPurchased()
     {
-        $user = \Auth::user();
+        $user = request()->user();
         \Log::info($user);
 
         if ($user) {
             return $this->purchases()->join('users', 'users.id', '=', 'purchases.user_id')
-                ->where('users.id', $user->id)->count() === 1;
+                ->where('users.id', $user->id)->count() > 0;
         }
     }
 }
