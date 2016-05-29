@@ -63,7 +63,9 @@ class Course extends Model
     public function hasPurchased()
     {
         $user = request()->user();
-        \Log::info($user);
+        if (!!$user) {
+            $user = \Auth::user();
+        }
 
         if ($user) {
             return $this->purchases()->join('users', 'users.id', '=', 'purchases.user_id')
