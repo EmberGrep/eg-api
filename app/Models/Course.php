@@ -63,7 +63,7 @@ class Course extends Model
     public function hasPurchased()
     {
         $user = request()->user();
-        if (!!$user) {
+        if (!$user) {
             $user = \Auth::user();
         }
 
