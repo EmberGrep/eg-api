@@ -62,6 +62,6 @@ class CourseTest extends TestCase
 
         Auth::login($user);
 
-        $this->assertEquals($course->hasPurchased(), $user->id);
+        $this->assertEquals($course->hasPurchased(), true);
     }
 }
