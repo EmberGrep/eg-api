@@ -38,6 +38,7 @@ $router->group(['prefix' => 'purchases'], function($router) {
 
 $router->group(['prefix' => 'purchased-courses'], function($router) {
     $router->get('/', 'PurchasedCourses\ListPurchasedCourses@action');
+    $router->get('/{courseSlug}', 'PurchasedCourses\FindPurchasedCourses@action');
 });
 
 $router->group(['prefix' => 'purchase-attempts'], function($router) {
