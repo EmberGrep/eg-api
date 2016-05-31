@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use EmberGrep\Models\Course;
 use EmberGrep\Models\User;
 use EmberGrep\Models\Lesson;
+use EmberGrep\Models\Purchase;
 use EmberGrep\Models\Video;
 
 class LessonsTest extends AcceptanceTestCase
@@ -33,6 +34,7 @@ class LessonsTest extends AcceptanceTestCase
 
         $this->lessonOneAttrs = ['title' => 'Foo', 'description' => 'Yo', 'position' => 1];
         $this->lessonTwoAttrs = ['title' => 'Bar', 'description' => 'Yo', 'position' => 2];
+        $this->lessonThreeAttrs = ['title' => 'Nope', 'description' => 'Yo', 'position' => 1];
     }
 
     public function setUp()
@@ -43,14 +45,40 @@ class LessonsTest extends AcceptanceTestCase
         $this->token = JWTAuth::fromUser($this->user);
 
         $this->course = Course::create($this->courseAttrs);
-        $this->lessonOne = Lesson::create($this->lessonOneAttrs);
-        $this->lessonTwo = Lesson::create($this->lessonTwoAttrs);
+        $this->lessonOne = new Lesson($this->lessonOneAttrs);
+        $this->lessonTwo = new Lesson($this->lessonTwoAttrs);
+        $this->lessonThree = Lesson::create($this->lessonThreeAttrs);
+        $this->course->lessons()->save($this->lessonOne);
+        $this->course->lessons()->save($this->lessonTwo);
         $video = new Video(['time' => 20, 'mp4_sd_url' => 'lorem', 'mp4_hd_url' => 'lorem', 'mp4_source_url' => 'lorem']);
         $this->lessonOne->video()->save($video);
     }
 
-    public function testAllLessons()
+    public function purchaseCourse()
     {
+        $this->purchase = Purchase::create([
+            'user_id' => $this->user->id,
+            'course_id' => $this->course->id,
+            'charge_amount' => 400,
+            'card_brand' => 'VISA',
+            'charge_id' => 'BARTER',
+        ]);
+    }
+
+    public function testNoUnpurchasedLessons()
+    {
+        $this->call('GET', '/lessons', [], [], [], $this->bearer($this->token));
+
+        $this->assertResponseOk();
+
+        $this->seeJson([
+            'data' => [],
+        ]);
+    }
+
+    public function testOnlyPurchasedLessons()
+    {
+        $this->purchaseCourse();
         $this->call('GET', '/lessons', [], [], [], $this->bearer($this->token));
 
         $this->assertResponseOk();

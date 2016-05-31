@@ -17,7 +17,11 @@ class ListLessons extends Controller
 
     public function action()
     {
-        $freeLessons = $this->lesson->get();
+        $userId = request()->user()->id;
+
+        $freeLessons = $this->lesson->whereHas('course.purchases', function($query) use ($userId) {
+            $query->where('purchases.user_id', $userId);
+        })->get();
 
         $item = new Collection($freeLessons, new LessonTransformer(), 'lessons');
 
