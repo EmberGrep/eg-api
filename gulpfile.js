@@ -12,5 +12,10 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.phpUnit();
+    mix.phpUnit(undefined, {
+        debug: true,
+        notify: true,
+        configurationFile: 'phpunit.xml',
+        testSuite: 'App'
+    });
 });
