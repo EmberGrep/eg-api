@@ -10,6 +10,16 @@ class Lesson extends TransformerAbstract
     protected $type = 'lessons';
 
     /**
+     * List of resources to automatically include ids for
+     *
+     * @var array
+     */
+    protected $relationships = [
+        'prev-lesson' => 'lessons',
+        'next-lesson' => 'lessons',
+    ];
+
+    /**
      * List of resources to automatically include
      *
      * @var array
@@ -33,7 +43,7 @@ class Lesson extends TransformerAbstract
             'id'      => $lesson->slug,
             'title' => $lesson->title,
             'time' => (int) $lesson->time,
-            'description' => $lesson->description,
+            'description' => (string)$lesson->description,
             'lesson-notes' => (string)$lesson->lesson_notes,
         ];
 
@@ -47,5 +57,29 @@ class Lesson extends TransformerAbstract
         }
 
         return null;
+    }
+
+    public function relationshipPrevLesson(LessonModel $lesson)
+    {
+        $lesson = $lesson->course->lessons()
+            ->orderBy('position', 'desc')
+            ->where('position', '<', $lesson->position)
+            ->limit(1)
+            ->lists('slug')
+            ->first();
+
+        return $lesson ?: null;
+    }
+
+    public function relationshipNextLesson(LessonModel $lesson)
+    {
+        $lesson = $lesson->course->lessons()
+            ->orderBy('position', 'asc')
+            ->where('position', '>', $lesson->position)
+            ->limit(1)
+            ->lists('slug')
+            ->first();
+
+        return $lesson ?: null;
     }
 }

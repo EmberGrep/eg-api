@@ -99,6 +99,7 @@ class LessonsTest extends AcceptanceTestCase
                     'id' => 'foo',
                     'attributes' => [
                         'title' => 'Foo',
+                        'lesson-notes' => '',
                         'description' => 'Yo',
                         'time' => 20,
                     ],
@@ -108,7 +109,19 @@ class LessonsTest extends AcceptanceTestCase
                                 'id' => '1',
                                 'type' => 'videos',
                             ]
-                        ]
+                        ],
+                        'next-lesson' => [
+                            'data' => [
+                                'id' => 'bar',
+                                'type' => 'lessons',
+                            ],
+                        ],
+                        'prev-lesson' => [
+                            'data' => [
+                                'id' => null,
+                                'type' => 'lessons',
+                            ],
+                        ],
                     ],
                 ],
                 [
@@ -116,10 +129,24 @@ class LessonsTest extends AcceptanceTestCase
                     'id' => 'bar',
                     'attributes' => [
                         'title' => 'Bar',
+                        'lesson-notes' => '',
                         'description' => 'Yo',
                         'time' => 0,
                     ],
-                    'relationships' => [],
+                    'relationships' => [
+                        'next-lesson' => [
+                            'data' => [
+                                'id' => null,
+                                'type' => 'lessons',
+                            ],
+                        ],
+                        'prev-lesson' => [
+                            'data' => [
+                                'id' => 'foo',
+                                'type' => 'lessons',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ]);
@@ -147,7 +174,19 @@ class LessonsTest extends AcceptanceTestCase
                             'id' => '1',
                             'type' => 'videos',
                         ]
-                    ]
+                    ],
+                    'next-lesson' => [
+                        'data' => [
+                            'id' => 'bar',
+                            'type' => 'lessons',
+                        ],
+                    ],
+                    'prev-lesson' => [
+                        'data' => [
+                            'id' => null,
+                            'type' => 'lessons',
+                        ],
+                    ],
                 ],
             ],
         ]);
