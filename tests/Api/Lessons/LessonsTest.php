@@ -99,6 +99,7 @@ class LessonsTest extends AcceptanceTestCase
                     'id' => 'foo',
                     'attributes' => [
                         'title' => 'Foo',
+                        'position' => 1,
                         'lesson-notes' => '',
                         'description' => 'Yo',
                         'time' => 20,
@@ -126,6 +127,7 @@ class LessonsTest extends AcceptanceTestCase
                     'id' => 'bar',
                     'attributes' => [
                         'title' => 'Bar',
+                        'position' => 2,
                         'lesson-notes' => '',
                         'description' => 'Yo',
                         'time' => 0,
@@ -159,6 +161,7 @@ class LessonsTest extends AcceptanceTestCase
                 'id' => 'foo',
                 'attributes' => [
                     'title' => 'Foo',
+                    'position' => 1,
                     'lesson-notes' => '',
                     'description' => 'Yo',
                     'time' => 20,

@@ -43,6 +43,7 @@ class Lesson extends TransformerAbstract
             'id'      => $lesson->slug,
             'title' => $lesson->title,
             'time' => (int) $lesson->time,
+            'position' => (int) $lesson->position,
             'description' => (string)$lesson->description,
             'lesson-notes' => (string)$lesson->lesson_notes,
         ];
