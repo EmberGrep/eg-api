@@ -33,6 +33,11 @@ $router->group(['prefix' => 'lesson-abstracts'], function($router) {
     $router->get('/{lessonSlug}', 'LessonAbstracts\FindLessonAbstract@action');
 });
 
+$router->group(['prefix' => 'lessons'], function($router) {
+    $router->get('/', 'Lessons\ListLessons@action');
+    $router->get('/{lessonSlug}', 'Lessons\FindLesson@action');
+});
+
 $router->group(['prefix' => 'purchases'], function($router) {
     $router->get('/', 'Purchases\ListPurchases@action');
 });
