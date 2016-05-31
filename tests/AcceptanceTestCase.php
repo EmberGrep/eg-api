@@ -33,6 +33,16 @@ abstract class AcceptanceTestCase extends TestCase
         });
     }
 
+    protected function jsonWithValidAuth($method, $uri, array $data = [])
+    {
+        return $this->json($method, $uri, $data, $this->bearer($this->token));
+    }
+
+    protected function jsonWithInvalidAuth($method, $uri, array $data = [])
+    {
+        return $this->json($method, $uri, $data, $this->bearer($this->invalidToken));
+    }
+
     protected function setUp()
     {
         parent::setUp();

@@ -62,21 +62,21 @@ class LessonsTest extends AcceptanceTestCase
 
     public function testListErrorOnNoAuth()
     {
-        $this->call('GET', '/lessons', [], [], [], $this->bearer($this->invalidToken));
+        $this->jsonWithInvalidAuth('GET', '/lessons');
 
         $this->assertResponseStatus(401);
     }
 
     public function testFindErrorOnNoAuth()
     {
-        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->invalidToken));
+        $this->jsonWithInvalidAuth('GET', '/lessons/foo');
 
         $this->assertResponseStatus(401);
     }
 
     public function testNoUnpurchasedLessons()
     {
-        $this->call('GET', '/lessons', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons');
 
         $this->assertResponseOk();
 
@@ -88,7 +88,7 @@ class LessonsTest extends AcceptanceTestCase
     public function testOnlyPurchasedLessons()
     {
         $this->purchaseCourse();
-        $this->call('GET', '/lessons', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons');
 
         $this->assertResponseOk();
 
@@ -119,7 +119,7 @@ class LessonsTest extends AcceptanceTestCase
     public function testFindPurchasedLesson()
     {
         $this->purchaseCourse();
-        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons/foo');
 
         $this->assertResponseOk();
 
@@ -138,7 +138,7 @@ class LessonsTest extends AcceptanceTestCase
 
     public function testErrorUnpurchasedLesson()
     {
-        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons/foo');
 
         $this->assertResponseStatus(404);
 
@@ -155,7 +155,7 @@ class LessonsTest extends AcceptanceTestCase
 
     public function testErrorFindLessonDoesntExist()
     {
-        $this->call('GET', '/lessons/bar', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons/bar');
 
         $this->assertResponseStatus(404);
 

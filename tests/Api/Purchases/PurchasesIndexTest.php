@@ -41,7 +41,7 @@ class PurchasesIndexTest extends AcceptanceTestCase
 
     public function testRequiresAuth()
     {
-        $this->call('GET', '/purchases', [], [], [], $this->bearer($this->invalidToken));
+        $this->jsonWithInvalidAuth('GET', '/purchases');
 
         $this->assertResponseStatus(401);
     }
@@ -59,7 +59,7 @@ class PurchasesIndexTest extends AcceptanceTestCase
         ]);
 
 
-        $this->call('GET', '/purchases', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/purchases');
 
         $this->assertResponseOk();
 

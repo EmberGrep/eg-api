@@ -66,7 +66,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
 
     public function testRequiresAuth()
     {
-        $this->call('POST', '/purchase-attempts', [], [], [], $this->bearer($this->invalidToken));
+        $this->jsonWithInvalidAuth('POST', '/purchase-attempts');
 
         $this->assertResponseStatus(401);
     }
@@ -75,7 +75,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
     {
         $this->setupData($this->validCard);
 
-        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+        $this->jsonWithValidAuth('POST', '/purchase-attempts', $this->req);
 
         $this->assertResponseStatus(201);
 
@@ -88,7 +88,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
     {
         $this->setupData($this->invalidCard);
 
-        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+        $this->jsonWithValidAuth('POST', '/purchase-attempts', $this->req);
 
         $this->assertResponseStatus(400);
 
@@ -109,7 +109,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
             'charge_id' => 'BARTER',
         ]);
 
-        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+        $this->jsonWithValidAuth('POST', '/purchase-attempts', $this->req);
 
         $this->assertResponseStatus(409);
 
@@ -130,7 +130,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
             'charge_id' => 'BARTER',
         ]);
 
-        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+        $this->jsonWithValidAuth('POST', '/purchase-attempts', $this->req);
 
         $this->assertResponseStatus(201);
 

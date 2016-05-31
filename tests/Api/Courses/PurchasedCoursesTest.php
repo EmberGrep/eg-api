@@ -40,7 +40,7 @@ class PurchasedCoursesTest extends AcceptanceTestCase
     {
         $this->setupData();
 
-        $this->call('GET', '/purchased-courses', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/purchased-courses');
 
         $this->assertResponseOk();
 
@@ -78,7 +78,7 @@ class PurchasedCoursesTest extends AcceptanceTestCase
 
         $this->course->lessons()->save($lesson);
 
-        $this->call('GET', '/purchased-courses', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/purchased-courses');
 
         $this->assertResponseOk();
 

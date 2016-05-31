@@ -40,7 +40,7 @@ class PurchasedCourseFindTest extends AcceptanceTestCase
     {
         $this->setupData();
 
-        $this->call('GET', '/purchased-courses/first-name', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/purchased-courses/first-name');
 
         $this->assertResponseOk();
 
@@ -71,7 +71,7 @@ class PurchasedCourseFindTest extends AcceptanceTestCase
     public function testErrorFindingPurchasedCourse()
     {
         $this->setupData();
-        $this->call('GET', '/purchased-courses/bar', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/purchased-courses/bar');
 
         $this->assertResponseStatus(404);
 
