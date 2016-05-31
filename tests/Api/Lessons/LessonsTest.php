@@ -102,6 +102,14 @@ class LessonsTest extends AcceptanceTestCase
                         'description' => 'Yo',
                         'time' => 20,
                     ],
+                    'relationships' => [
+                        'video' => [
+                            'data' => [
+                                'id' => '1',
+                                'type' => 'videos',
+                            ]
+                        ]
+                    ],
                 ],
                 [
                     'type' => 'lessons',
@@ -111,6 +119,7 @@ class LessonsTest extends AcceptanceTestCase
                         'description' => 'Yo',
                         'time' => 0,
                     ],
+                    'relationships' => [],
                 ],
             ],
         ]);
@@ -131,6 +140,14 @@ class LessonsTest extends AcceptanceTestCase
                     'title' => 'Foo',
                     'description' => 'Yo',
                     'time' => 20,
+                ],
+                'relationships' => [
+                    'video' => [
+                        'data' => [
+                            'id' => '1',
+                            'type' => 'videos',
+                        ]
+                    ]
                 ],
             ],
         ]);

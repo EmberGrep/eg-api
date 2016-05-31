@@ -15,6 +15,10 @@ class Lesson extends TransformerAbstract
      * @var array
      */
     protected $includedResources = [
+        'video',
+        // 'links',
+        // 'tags',
+        // 'files',
     ];
 
     /**
@@ -30,8 +34,18 @@ class Lesson extends TransformerAbstract
             'title' => $lesson->title,
             'time' => (int) $lesson->time,
             'description' => $lesson->description,
+            'lesson-notes' => (string)$lesson->lesson_notes,
         ];
 
         return $attrs;
+    }
+
+    public function includeVideo(LessonModel $lesson)
+    {
+        if ($lesson->video) {
+            return new Item($lesson->video, new Video());
+        }
+
+        return null;
     }
 }

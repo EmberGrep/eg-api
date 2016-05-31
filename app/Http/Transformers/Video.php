@@ -7,6 +7,9 @@ class Video extends TransformerAbstract
 {
     protected $type = 'videos';
 
+
+    protected $relationships = ['lesson' => 'lessons'];
+
     /**
      * Transform only desired properties for API
      *
@@ -18,9 +21,13 @@ class Video extends TransformerAbstract
         return [
             'id'      => (string)$video->id,
             'time' => (int) $video->time,
-            'mp4_sd_url' => $video->mp4_sd_url,
-            'mp4_hd_url' => $video->mp4_hd_url,
-            'mp4_source_url' => $video->mp4_source_url,
+            'sd-url' => $video->mp4_sd_url,
+            'hd-url' => $video->mp4_hd_url,
         ];
+    }
+
+    public function relationshipLesson(VideoModel $video)
+    {
+        return $video->lesson()->lists('slug')->first();
     }
 }
