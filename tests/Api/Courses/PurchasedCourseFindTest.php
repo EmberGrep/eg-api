@@ -8,8 +8,6 @@ use Carbon\Carbon;
 
 class PurchasedCourseFindTest extends AcceptanceTestCase
 {
-    protected $invalidToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvYXV0aC10b2tlbiIsImlhdCI6MTQ1OTQ0NTQ3MiwiZXhwIjoxNDU5NDQ5MDcyLCJuYmYiOjE0NTk0NDU0NzIsImp0aSI6IjUwZGQwNWE3ZTdmZjhkNjY5MTM5NGUwODU4NTQzOTYwIn0.Gsl3eOgDQa_WlRbRt2ZgJGxqZOkhkaNXk2dEzcOV-fk";
-
     public function __construct()
     {
         $this->attrs = [
@@ -25,9 +23,6 @@ class PurchasedCourseFindTest extends AcceptanceTestCase
 
     public function setupData($purchaseCourse = true)
     {
-        $this->userAttrs = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
-        $this->user = User::create($this->userAttrs);
-        $this->token = JWTAuth::fromUser($this->user);
         $this->course = Course::create($this->attrs);
 
         if ($purchaseCourse) {
