@@ -107,40 +107,57 @@ class LessonsTest extends AcceptanceTestCase
         ]);
     }
 
-//    public function testFindLesson()
-//    {
-//        $this->call('GET', '/lessons/foo');
-//
-//        $this->assertResponseOk();
-//
-//        $this->seeJson([
-//            'data' => [
-//                'type' => 'lessons',
-//                'id' => 'foo',
-//                'attributes' => [
-//                    'title' => 'Foo',
-//                    'description' => 'Yo',
-//                    'time' => 0,
-//                ],
-//            ],
-//        ]);
-//    }
-//
-//    public function testErrorFindLessonDoesntExist()
-//    {
-//        Lesson::create(['title' => 'Foo', 'position' => 1]);
-//        $this->call('GET', '/lessons/bar');
-//
-//        $this->assertResponseStatus(404);
-//
-//        $this->seeJson([
-//            'errors' => [
-//                [
-//                    'status' => '404',
-//                    'title' => 'Not Found',
-//                    'detail' => 'The requested resource was not found.'
-//                ],
-//            ],
-//        ]);
-//    }
+    public function testFindPurchasedLesson()
+    {
+        $this->purchaseCourse();
+        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->token));
+
+        $this->assertResponseOk();
+
+        $this->seeJson([
+            'data' => [
+                'type' => 'lessons',
+                'id' => 'foo',
+                'attributes' => [
+                    'title' => 'Foo',
+                    'description' => 'Yo',
+                    'time' => 20,
+                ],
+            ],
+        ]);
+    }
+
+    public function testErrorUnpurchasedLesson()
+    {
+        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->token));
+
+        $this->assertResponseStatus(404);
+
+        $this->seeJson([
+            'errors' => [
+                [
+                    'status' => '404',
+                    'title' => 'Not Found',
+                    'detail' => 'The requested resource was not found.'
+                ],
+            ],
+        ]);
+    }
+
+    public function testErrorFindLessonDoesntExist()
+    {
+        $this->call('GET', '/lessons/bar', [], [], [], $this->bearer($this->token));
+
+        $this->assertResponseStatus(404);
+
+        $this->seeJson([
+            'errors' => [
+                [
+                    'status' => '404',
+                    'title' => 'Not Found',
+                    'detail' => 'The requested resource was not found.'
+                ],
+            ],
+        ]);
+    }
 }
