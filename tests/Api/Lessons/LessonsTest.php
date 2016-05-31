@@ -117,10 +117,7 @@ class LessonsTest extends AcceptanceTestCase
                             ],
                         ],
                         'prev-lesson' => [
-                            'data' => [
-                                'id' => null,
-                                'type' => 'lessons',
-                            ],
+                            'data' => null,
                         ],
                     ],
                 ],
@@ -135,10 +132,7 @@ class LessonsTest extends AcceptanceTestCase
                     ],
                     'relationships' => [
                         'next-lesson' => [
-                            'data' => [
-                                'id' => null,
-                                'type' => 'lessons',
-                            ],
+                            'data' => null,
                         ],
                         'prev-lesson' => [
                             'data' => [
@@ -165,6 +159,7 @@ class LessonsTest extends AcceptanceTestCase
                 'id' => 'foo',
                 'attributes' => [
                     'title' => 'Foo',
+                    'lesson-notes' => '',
                     'description' => 'Yo',
                     'time' => 20,
                 ],
@@ -182,10 +177,7 @@ class LessonsTest extends AcceptanceTestCase
                         ],
                     ],
                     'prev-lesson' => [
-                        'data' => [
-                            'id' => null,
-                            'type' => 'lessons',
-                        ],
+                        'data' => null,
                     ],
                 ],
             ],
