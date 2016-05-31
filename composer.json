@@ -5,6 +5,13 @@
     "license": "MIT",
     "type": "project",
     "minimum-stability": "dev",
+
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/rtablada/manuel"
+      }
+    ],
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",

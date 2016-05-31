@@ -99,8 +99,27 @@ class LessonsTest extends AcceptanceTestCase
                     'id' => 'foo',
                     'attributes' => [
                         'title' => 'Foo',
+                        'position' => 1,
+                        'lesson-notes' => '',
                         'description' => 'Yo',
                         'time' => 20,
+                    ],
+                    'relationships' => [
+                        'video' => [
+                            'data' => [
+                                'id' => '1',
+                                'type' => 'videos',
+                            ]
+                        ],
+                        'next-lesson' => [
+                            'data' => [
+                                'id' => 'bar',
+                                'type' => 'lessons',
+                            ],
+                        ],
+                        'prev-lesson' => [
+                            'data' => null,
+                        ],
                     ],
                 ],
                 [
@@ -108,8 +127,21 @@ class LessonsTest extends AcceptanceTestCase
                     'id' => 'bar',
                     'attributes' => [
                         'title' => 'Bar',
+                        'position' => 2,
+                        'lesson-notes' => '',
                         'description' => 'Yo',
                         'time' => 0,
+                    ],
+                    'relationships' => [
+                        'next-lesson' => [
+                            'data' => null,
+                        ],
+                        'prev-lesson' => [
+                            'data' => [
+                                'id' => 'foo',
+                                'type' => 'lessons',
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -129,8 +161,27 @@ class LessonsTest extends AcceptanceTestCase
                 'id' => 'foo',
                 'attributes' => [
                     'title' => 'Foo',
+                    'position' => 1,
+                    'lesson-notes' => '',
                     'description' => 'Yo',
                     'time' => 20,
+                ],
+                'relationships' => [
+                    'video' => [
+                        'data' => [
+                            'id' => '1',
+                            'type' => 'videos',
+                        ]
+                    ],
+                    'next-lesson' => [
+                        'data' => [
+                            'id' => 'bar',
+                            'type' => 'lessons',
+                        ],
+                    ],
+                    'prev-lesson' => [
+                        'data' => null,
+                    ],
                 ],
             ],
         ]);
