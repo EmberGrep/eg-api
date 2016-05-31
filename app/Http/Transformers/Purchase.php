@@ -36,6 +36,6 @@ class Purchase extends TransformerAbstract
 
     public function includeCourse(PurchaseModel $purchase)
     {
-        return new Item($purchase->course, new Course());
+        return new Item($purchase->course, new PurchasedCourse());
     }
 }

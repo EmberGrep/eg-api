@@ -76,7 +76,7 @@ class PurchasesIndexTest extends AcceptanceTestCase
                     'relationships' => [
                         "course" => [
                             "data" => [
-                                "id" => "first-name","type"=> "courses"
+                                "id" => "first-name","type"=> "purchased-courses"
                             ]
                         ]
                     ],
@@ -87,19 +87,24 @@ class PurchasesIndexTest extends AcceptanceTestCase
         $this->seeJson([
             'included' => [
                 [
-                        "attributes" => [
+                    "attributes" => [
                         "active" => true,
                         "coming-soon" => false,
                         "description" => "lorem pixum",
                         "long-description" => "Lorem ipsum dolor sit amet",
                         "name" => "First Name",
                         "price" => 200,
-                        "purchased" => false,
+                        "purchased" => true,
                         "release-date" => $this->courseOne->release_date->toIso8601String(),
                         "time" => 0,
                     ],
                     "id" => "first-name",
-                    "type" => "courses",
+                    "relationships" => [
+                        "lessons" => [
+                            "data" => [],
+                        ],
+                    ],
+                    "type" => "purchased-courses",
                 ],
             ],
         ]);
