@@ -11,7 +11,7 @@ class ListLessons extends Controller
 {
     public function __construct(Lesson $lesson)
     {
-        $this->middleware('optional-auth');
+        $this->middleware('auth');
         $this->lesson = $lesson;
     }
 

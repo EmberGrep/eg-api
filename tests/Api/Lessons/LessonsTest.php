@@ -9,6 +9,8 @@ use EmberGrep\Models\Video;
 
 class LessonsTest extends AcceptanceTestCase
 {
+    protected $invalidToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvYXV0aC10b2tlbiIsImlhdCI6MTQ1OTQ0NTQ3MiwiZXhwIjoxNDU5NDQ5MDcyLCJuYmYiOjE0NTk0NDU0NzIsImp0aSI6IjUwZGQwNWE3ZTdmZjhkNjY5MTM5NGUwODU4NTQzOTYwIn0.Gsl3eOgDQa_WlRbRt2ZgJGxqZOkhkaNXk2dEzcOV-fk";
+
     protected $userAttrs;
     protected $courseAttrs;
     protected $lessonOneAttrs;
@@ -63,6 +65,20 @@ class LessonsTest extends AcceptanceTestCase
             'card_brand' => 'VISA',
             'charge_id' => 'BARTER',
         ]);
+    }
+
+    public function testListErrorOnNoAuth()
+    {
+        $this->call('GET', '/lessons', [], [], [], $this->bearer($this->invalidToken));
+
+        $this->assertResponseStatus(401);
+    }
+
+    public function testFindErrorOnNoAuth()
+    {
+        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->invalidToken));
+
+        $this->assertResponseStatus(401);
     }
 
     public function testNoUnpurchasedLessons()
