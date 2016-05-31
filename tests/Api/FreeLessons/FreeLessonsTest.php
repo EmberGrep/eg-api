@@ -23,6 +23,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                     'id' => 'foo',
                     'attributes' => [
                         'title' => 'Foo',
+                        'position' => 1,
                         'description' => 'Yo',
                         'time' => 20,
                         'lesson-notes' => '',
@@ -53,6 +54,7 @@ class FreeLessonsTest extends AcceptanceTestCase
                 'id' => 'foo',
                 'attributes' => [
                     'title' => 'Foo',
+                    'position' => 1,
                     'description' => 'Yo',
                     'time' => 0,
                     'lesson-notes' => '',
