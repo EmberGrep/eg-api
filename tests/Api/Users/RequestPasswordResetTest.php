@@ -4,15 +4,6 @@ use EmberGrep\Models\User;
 
 class RequestPasswordResetTest extends AcceptanceTestCase
 {
-    protected $user;
-
-    public function setup()
-    {
-        parent::setUp();
-        $properties = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
-        $this->user = User::create($properties);
-    }
-
     public function testRequestExistingUser()
     {
         $this->expectsEvents(EmberGrep\Events\UserRequestPasswordReset::class);

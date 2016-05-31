@@ -4,6 +4,8 @@ use EmberGrep\Models\User;
 
 class RegisterUserTest extends AcceptanceTestCase
 {
+    protected $loginUser = false;
+
     public function testRegisterUser()
     {
         $this->expectsEvents(EmberGrep\Events\UserRegistered::class);

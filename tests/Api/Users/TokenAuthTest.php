@@ -6,9 +6,6 @@ class TokenAuthTest extends AcceptanceTestCase
 {
     public function testJWTAuth()
     {
-        $properties = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
-        User::create($properties);
-
         $this->call('POST', '/auth-token', ['username' => 'admin@example.com', 'password' => 'password']);
 
         $this->assertResponseOk();
@@ -24,9 +21,6 @@ class TokenAuthTest extends AcceptanceTestCase
 
     public function testInvalidUsername()
     {
-        $properties = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
-        User::create($properties);
-
         $this->call('POST', '/auth-token', ['username' => 'notuser@example.com', 'password' => 'password', 'password_confirmation' => 'password']);
 
         $this->assertResponseStatus(400);

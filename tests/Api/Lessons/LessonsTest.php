@@ -9,15 +9,10 @@ use EmberGrep\Models\Video;
 
 class LessonsTest extends AcceptanceTestCase
 {
-    protected $invalidToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvYXV0aC10b2tlbiIsImlhdCI6MTQ1OTQ0NTQ3MiwiZXhwIjoxNDU5NDQ5MDcyLCJuYmYiOjE0NTk0NDU0NzIsImp0aSI6IjUwZGQwNWE3ZTdmZjhkNjY5MTM5NGUwODU4NTQzOTYwIn0.Gsl3eOgDQa_WlRbRt2ZgJGxqZOkhkaNXk2dEzcOV-fk";
-
-    protected $userAttrs;
     protected $courseAttrs;
     protected $lessonOneAttrs;
     protected $lessonTwoAttrs;
 
-    protected $user;
-    protected $token;
     protected $course;
     protected $lessonOne;
     protected $lessonTwo;
@@ -42,9 +37,7 @@ class LessonsTest extends AcceptanceTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->userAttrs = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
-        $this->user = User::create($this->userAttrs);
-        $this->token = JWTAuth::fromUser($this->user);
+
 
         $this->course = Course::create($this->courseAttrs);
         $this->lessonOne = new Lesson($this->lessonOneAttrs);
@@ -69,21 +62,21 @@ class LessonsTest extends AcceptanceTestCase
 
     public function testListErrorOnNoAuth()
     {
-        $this->call('GET', '/lessons', [], [], [], $this->bearer($this->invalidToken));
+        $this->jsonWithInvalidAuth('GET', '/lessons');
 
         $this->assertResponseStatus(401);
     }
 
     public function testFindErrorOnNoAuth()
     {
-        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->invalidToken));
+        $this->jsonWithInvalidAuth('GET', '/lessons/foo');
 
         $this->assertResponseStatus(401);
     }
 
     public function testNoUnpurchasedLessons()
     {
-        $this->call('GET', '/lessons', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons');
 
         $this->assertResponseOk();
 
@@ -95,7 +88,7 @@ class LessonsTest extends AcceptanceTestCase
     public function testOnlyPurchasedLessons()
     {
         $this->purchaseCourse();
-        $this->call('GET', '/lessons', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons');
 
         $this->assertResponseOk();
 
@@ -126,7 +119,7 @@ class LessonsTest extends AcceptanceTestCase
     public function testFindPurchasedLesson()
     {
         $this->purchaseCourse();
-        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons/foo');
 
         $this->assertResponseOk();
 
@@ -145,7 +138,7 @@ class LessonsTest extends AcceptanceTestCase
 
     public function testErrorUnpurchasedLesson()
     {
-        $this->call('GET', '/lessons/foo', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons/foo');
 
         $this->assertResponseStatus(404);
 
@@ -162,7 +155,7 @@ class LessonsTest extends AcceptanceTestCase
 
     public function testErrorFindLessonDoesntExist()
     {
-        $this->call('GET', '/lessons/bar', [], [], [], $this->bearer($this->token));
+        $this->jsonWithValidAuth('GET', '/lessons/bar');
 
         $this->assertResponseStatus(404);
 

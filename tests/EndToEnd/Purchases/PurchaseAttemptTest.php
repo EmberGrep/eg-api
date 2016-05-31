@@ -10,10 +10,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
 {
     protected $validCard = '4242424242424242';
     protected $invalidCard = '4000000000000002';
-    protected $invalidToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvYXV0aC10b2tlbiIsImlhdCI6MTQ1OTQ0NTQ3MiwiZXhwIjoxNDU5NDQ5MDcyLCJuYmYiOjE0NTk0NDU0NzIsImp0aSI6IjUwZGQwNWE3ZTdmZjhkNjY5MTM5NGUwODU4NTQzOTYwIn0.Gsl3eOgDQa_WlRbRt2ZgJGxqZOkhkaNXk2dEzcOV-fk';
-    protected $userAttrs;
-    protected $token;
-    protected $user;
+
     protected $courseAttrsOne;
     protected $courseAttrsTwo;
     protected $courseOne;
@@ -23,9 +20,6 @@ class PurchaseAttemptTest extends AcceptanceTestCase
 
     public function setupData($cardNumber)
     {
-        $this->userAttrs = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
-        $this->user = User::create($this->userAttrs);
-        $this->token = JWTAuth::fromUser($this->user);
 
         $this->courseAttrsOne = [
             'name'             => 'First Name',
@@ -72,7 +66,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
 
     public function testRequiresAuth()
     {
-        $this->call('POST', '/purchase-attempts', [], [], [], $this->bearer($this->invalidToken));
+        $this->jsonWithInvalidAuth('POST', '/purchase-attempts');
 
         $this->assertResponseStatus(401);
     }
@@ -81,7 +75,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
     {
         $this->setupData($this->validCard);
 
-        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+        $this->jsonWithValidAuth('POST', '/purchase-attempts', $this->req);
 
         $this->assertResponseStatus(201);
 
@@ -94,7 +88,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
     {
         $this->setupData($this->invalidCard);
 
-        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+        $this->jsonWithValidAuth('POST', '/purchase-attempts', $this->req);
 
         $this->assertResponseStatus(400);
 
@@ -115,7 +109,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
             'charge_id' => 'BARTER',
         ]);
 
-        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+        $this->jsonWithValidAuth('POST', '/purchase-attempts', $this->req);
 
         $this->assertResponseStatus(409);
 
@@ -136,7 +130,7 @@ class PurchaseAttemptTest extends AcceptanceTestCase
             'charge_id' => 'BARTER',
         ]);
 
-        $this->json('POST', '/purchase-attempts', $this->req, $this->bearer($this->token));
+        $this->jsonWithValidAuth('POST', '/purchase-attempts', $this->req);
 
         $this->assertResponseStatus(201);
 

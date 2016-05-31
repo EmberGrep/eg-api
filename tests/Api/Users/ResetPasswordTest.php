@@ -5,22 +5,21 @@ use EmberGrep\Models\User;
 class ResetPasswordTest extends AcceptanceTestCase
 {
     protected $user;
-    protected $token;
+    protected $passwordToken;
 
-    public function setup()
+    public function setUp()
     {
         parent::setUp();
-        $properties = ['email' => 'admin@example.com', 'password' => bcrypt('password')];
-        $this->user = User::create($properties);
-        $this->token = Password::getRepository()->create($this->user);
+
+        $this->passwordToken = Password::getRepository()->create($this->user);
     }
 
     public function testRequestValidToken()
     {
-        $this->call('POST', "/password-reset/{$this->token}", [
+        $this->call('POST', "/password-reset/{$this->passwordToken}", [
             'email' => 'admin@example.com',
             'password' => 'foobar',
-            'token' => $this->token,
+            'token' => $this->passwordToken,
         ]);
 
         $passwordChanged = Auth::validate([
